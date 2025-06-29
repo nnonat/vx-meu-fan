@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title class="blinking-title">Making the World Better</title>
+  <link rel="icon" href="file:///C:/Users/Thiag/Downloads/d60541bc9ab6acb104a19b82420a4e60-removebg-preview.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+  <video class="vidoverlay" autoplay loop muted src="/video.mp4"></video>
+
+  <div class="view-counter">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+    <span><%- infos.views %></span>
+  </div>
+
+  <div class="all">
+    <% users.forEach(user => { %>
+      <div class="discord-profile">
+        <div class="profile animate__animated animate__fadeInUp animate__fast">
+          <div class="pfp">
+            <% if (user.avatar_url) { %>
+              <img src="<%= user.avatar_url %>" alt="Avatar" />
+            <% } else { %>
+              <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Sem avatar" />
+            <% } %>
+          </div>
+          <div class="nick"><%= user.global_name || user.username %></div>
+          <div class="subnick">@<%= user.username %></div>
+          <% if (user.created_at) { %>
+            <div class="created">Criado em: <%= new Date(user.created_at).toLocaleDateString() %></div>
+          <% } %>
+        </div>
+      </div>
+    <% }); %>
+
+    <input type="checkbox" autocomplete="off" id="overlay-toggle" />
+    <div class="overlay fullscreen" onclick="toggleFullScreen();">
+      <label for="overlay-toggle" onclick="playAudio();">
+        <span class="overlayhover hover" style="font-family: monospace; font-size: 0.6em;">
+          يمارس الجنس الآن ز
+        </span>
+      </label>
+    </div>
+
+    <audio loop preload="auto" id="audio">
+      <source src="/vx.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
+  <script>
+    function playAudio() {
+      const audio = document.getElementById("audio");
+      audio.volume = 1.0;
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    function toggleFullScreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+  </script>
+</body>
+
+</html>
